@@ -11,12 +11,12 @@ containers:
   - name: backend
     image: registry.tourde.cloud/roomplants/backend
     port: 8000
-    environment:
+    env:
       DATABASE_URL: postgres://admin:admin1234@database:5432/tourdeapp
   - name: database
     image: postgres:17-alpine
     tag: "17"
-    environment:
+    env:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin1234
       POSTGRES_DB: tourdeapp
