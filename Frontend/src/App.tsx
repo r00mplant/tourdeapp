@@ -6,7 +6,7 @@ function App() {
 
   return (
     <> 
-    <h1> Think different Acadamy!
+    <h1> Think different Acadamy
     </h1>
     
     </>
