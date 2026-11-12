@@ -1,9 +1,19 @@
 import fastapi
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi import status
 import uvicorn
 from pydantic import BaseModel
 
+
 app = fastapi.FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class HealthResponse(BaseModel):
     status: str

@@ -14,8 +14,8 @@ containers:
     env:
       DATABASE_URL: postgres://admin:admin1234@database:5432/tourdeapp
   - name: database
-    image: postgres:17-alpine
-    tag: "17"
+    image: postgres
+    tag: "17-alpine"
     env:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin1234
