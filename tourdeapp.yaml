@@ -1,24 +1,19 @@
-#$schema: https://tourde.cloud/api/v2/schema
+# $schema: https://tourde.cloud/api/v2/schema
 
-port: 80
+exposedPort: 80
 
 containers:
-  frontend:
-    build: ./frontend
+  - name: frontend
     image: registry.tourde.cloud/roomplants/web
-    ports:
-      - "5173:5173"
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
-  caddy:
+    port: 3001
+  - name: caddy
     image: registry.tourde.cloud/roomplants/caddy
-    ports:
-      - "80:80"
-build: 
-  name: frontend
-  context: ./frontend
-  dockerfile: Dockerfile
-  name: caddy
-  context: ./caddy
-  dockerfile: Dockerfile
+    port: 80
+
+build:
+  - name: frontend
+    context: ./Frontend
+    dockerfile: ./Frontend/dockerfile
+  - name: caddy
+    context: ./Caddy
+    dockerfile: ./Caddy/dockerfile
