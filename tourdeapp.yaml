@@ -8,6 +8,9 @@ containers:
   - name: caddy
     image: registry.tourde.cloud/roomplants/caddy
     port: 80
+  - name: backend
+    image: registry.tourde.cloud/roomplants/backend
+    port: 8000
 
 build:
   - name: frontend
@@ -16,3 +19,6 @@ build:
   - name: caddy
     context: ./Caddy
     dockerfile: ./Caddy/dockerfile
+  - name: backend
+    context: ./Backend
+    dockerfile: ./Backend/dockerfile
