@@ -1,2 +1,12 @@
-# $schema: https://tourde.cloud/api/v2/schema
+#$schema: https://tourde.cloud/api/v2/schema
 
+name: tour-de-app
+
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
