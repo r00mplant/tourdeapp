@@ -5,14 +5,14 @@ port: 80
 containers:
   frontend:
     build: ./frontend
-    image: registry.tourde.cloud/RoomPlants/web
+    image: registry.tourde.cloud/roomplants/web
     ports:
       - "5173:5173"
     volumes:
       - ./frontend:/app
       - /app/node_modules
   caddy:
-    image: registry.tourde.cloud/RoomPlants/caddy
+    image: registry.tourde.cloud/roomplants/caddy
     ports:
       - "80:80"
 build: 
