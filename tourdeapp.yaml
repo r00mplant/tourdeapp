@@ -1,11 +1,11 @@
-#$schema: https://tourde.cloud/api/v2/schema
+# $schema: https://tourde.cloud/api/v2/schema
 
 port: 80
 
 containers:
   frontend:
     build: ./frontend
-    image: registry.tourde.cloud/roomplants/web
+    image: registry.tourde.cloud/roomplants/frontend
     ports:
       - "5173:5173"
     volumes:
