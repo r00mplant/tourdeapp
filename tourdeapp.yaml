@@ -1,12 +1,24 @@
 #$schema: https://tourde.cloud/api/v2/schema
 
-name: tour-de-app
+port: 80
 
-services:
+containers:
   frontend:
     build: ./frontend
+    image: registry.tourde.cloud/RoomPlants/web
     ports:
       - "5173:5173"
     volumes:
       - ./frontend:/app
       - /app/node_modules
+  caddy:
+    image: registry.tourde.cloud/RoomPlants/caddy
+    ports:
+      - "80:80"
+build: 
+  name: frontend
+  context: ./frontend
+  dockerfile: Dockerfile
+  name: caddy
+  context: ./caddy
+  dockerfile: Dockerfile
