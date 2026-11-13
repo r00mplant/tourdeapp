@@ -9,7 +9,7 @@ interface HealthCheck {
 function App() {
   const [serverStatus, setServerStatus] = useState<string>("loading...")
   async function HealthCheck() {
-    const response = await fetch("https://0.0.0.0/api/v1/health")
+    const response = await fetch("/api/v1/health")
     const responseStatus = await response.json();
     setServerStatus(responseStatus.status)
   }
