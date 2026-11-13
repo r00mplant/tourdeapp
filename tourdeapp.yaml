@@ -12,7 +12,7 @@ containers:
     image: registry.tourde.cloud/roomplants/backend
     port: 8000
     env:
-      DATABASE_URL: postgresql+psycopg2://admin:admin1234@database:5432/tourdeapp
+      DATABASE_URL: postgresql+psycopg2://admin:admin1234@localhost:5432/tourdeapp
   - name: database
     image: postgres
     tag: "17-alpine"
