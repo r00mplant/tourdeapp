@@ -20,6 +20,7 @@ containers:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin1234
       POSTGRES_DB: tourdeapp
+      DATABASE_URL: postgresql+psycopg2://admin:admin1234@localhost:5432/tourdeapp
     port: 5432
 
 build:
