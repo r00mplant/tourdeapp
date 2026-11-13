@@ -1,5 +1,5 @@
 import fastapi
-from fastapi import status
+from fastapi import status, HTTPException
 from sqlalchemy import inspect, text
 from sqlalchemy.exc import SQLAlchemyError
 from database import engine
@@ -24,14 +24,12 @@ def read_health_db(response: fastapi.Response):
         with engine.connect() as connection:
             connection.execute(text("SELECT 1"))
     except SQLAlchemyError:
-        response.status_code = status.HTTP_503_SERVICE_UNAVAILABLE
-        return DBHealthResponse(db_status="error", teams="unknown")
+        raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="Database connection error")
 
     teams_exists = inspector.has_table("teams")
 
     if not teams_exists:
-        response.status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
-        return DBHealthResponse(db_status="error", teams="missing")
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Teams table missing")
     
     response.status_code = status.HTTP_200_OK
     return DBHealthResponse(db_status="ok", teams="ok")

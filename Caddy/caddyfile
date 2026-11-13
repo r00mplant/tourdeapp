@@ -3,6 +3,14 @@
         reverse_proxy {$BACKEND_HOST:localhost:8000}
     }
 
+    handle /docs* {
+        reverse_proxy {$BACKEND_HOST:localhost:8000}
+    }
+
+    handle /openapi.json {
+        reverse_proxy {$BACKEND_HOST:localhost:8000} 
+    }
+
     handle {
         reverse_proxy {$FRONTEND_HOST:localhost:3001}
     }
