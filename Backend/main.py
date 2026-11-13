@@ -1,11 +1,21 @@
 import fastapi
+from contextlib import asynccontextmanager
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi import status
 import uvicorn
-from pydantic import BaseModel
+from database import Base, engine
+from routers import health
+from models import Team
 
+@asynccontextmanager
+async def lifespan(app: fastapi.FastAPI):
+    Base.metadata.create_all(bind=engine)
+    yield
 
-app = fastapi.FastAPI()
+app = fastapi.FastAPI(
+    title="Tour de App API",
+    version="1.0.0",
+    lifespan=lifespan
+)
 
 app.add_middleware(
     CORSMiddleware,
@@ -15,26 +25,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-class TeamRequest(BaseModel):
-    name: str
-
-class TeamMemberRequest(BaseModel):
-    name: str
-
-class HealthResponse(BaseModel):
-    status: str
-
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
-
-@app.get("/api/v1/health", response_model=HealthResponse, status_code=status.HTTP_200_OK)
-def read_health() -> HealthResponse:
-    return HealthResponse(status="ok")
-
-@app.post("/api/v1/create-team", status_code=status.HTTP_201_CREATED)
-def create_team(request: TeamRequest):
-    return {"name": request.name}
+app.include_router(health.router)
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
