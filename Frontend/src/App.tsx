@@ -66,7 +66,7 @@ function App() {
          
         method: "POST",
          headers: {"Content-Type": "application/json"},
-         body: JSON.stringify({ //Packt alles in ein JSON Object 
+         body: JSON.stringify({ 
 
           name: teamName.trim(),
           member1: member1.trim(),
@@ -92,7 +92,7 @@ function App() {
 
 
       /*const serverAnswer = await loadTeamToBackend.json()
-      setTeam(serverAnswer.team) //neue Teams aktualisieren*/
+      setTeam(serverAnswer.team)*/
   
       
       
