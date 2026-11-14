@@ -112,6 +112,7 @@ function App() {
     <button 
       type="button"
       id="addTeamButton"
+      className="bg-violett-300"
       onClick={() => setIsTeamPopupOpen(true)}
     >
       Add new Team
@@ -124,16 +125,16 @@ function App() {
         </h2>
         {team.map((currentTeam) => (
           <div key={currentTeam.id} className="team-card">
-            <h3>
+            <h3 className="bg-black-700">
               {currentTeam.name}
             </h3>
-            <p>
+            <p className="bg-violet-500 text-sky-500">
               ID: {currentTeam.id}
             </p>
-            <p>
+            <p className="bg-violet-700 text-sky-500">
               Member 1: {currentTeam.member1}
             </p>
-            <p>
+            <p className="bg-violet-900 text-sky-500">
               Member 2: {currentTeam.member2}
             </p>
           </div>
