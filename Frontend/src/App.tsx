@@ -13,9 +13,11 @@ function App() {
     const responseStatus = await response.json();
     setServerStatus(responseStatus.status)
   }
-  for (let i=0; i<1; i++){
+  useEffect(()=> {
     HealthCheck()
-  }
+  }, [])
+    
+  
 
   interface Team {
     id: number
@@ -25,15 +27,29 @@ function App() {
   }
 
   const [team, setTeam] = useState<Team[]>([]) 
-  async function getCurrTeams() {
-    const response = await fetch("/api/v1/teams")
-    const currTemas = await response.json()
-    setTeam(currTemas.name + currTemas.id) //müssen gucken ob es currTeams.name oder currTeams.id ist, da er die akuellen Teams aufruft  
+  /*async function getCurrTeams() {
+    const foundTeams: Team[] = []
+    
+    let teamId = 1
+
+    while (true) {
+      try{
+        const response = await fetch(`/api/v1/teams/${teamId}`)
+      } catch {
+        if (response.status === 404) break
+      }
+      
+      const currentTeams: Team = await response.json()
+      foundTeams.push(currentTeams)
+      teamId++
+    }
+
+    setTeam(foundTeams)
   }
 
   useEffect(() => { 
     getCurrTeams()
-  }, [])
+  }, [])*/
     
   
 
@@ -44,52 +60,157 @@ function App() {
   async function addNewTeam() {
     if(!teamName.trim()) return
 
-    const memberList: string[] = [] //Leere Liste deklarieren und initialisieren
+    try { 
 
-    if(member1.trim() !== "") {
-      memberList.push(member1) //Push ist equal zu .add() in Java
-    }
-
-    if(member2.trim() !== ""){
-      memberList.push(member2)
-    }
-
-    try { //try catch um fehler zu preventen
-      const response = await fetch("/api/v1/teams", { //genauere Definition des Fetch befehls
-         method: "POST",
+      const loadTeamToBackend = await fetch("/api/v1/teams/", { 
+         
+        method: "POST",
          headers: {"Content-Type": "application/json"},
          body: JSON.stringify({ //Packt alles in ein JSON Object 
-          name: teamName,
-          member1: member1,
-          member2:member2
+
+          name: teamName.trim(),
+          member1: member1.trim(),
+          member2:member2.trim()
+
          })
       })
 
-      try{
-        const serverAnswer = await response.json()
-        setTeam(serverAnswer.team) //neue Teams aktualisieren
-      } catch {
-        console.error("422 Validation Error oder Ähnliches")
+      if (!loadTeamToBackend.ok) {
+        throw new Error(`HTTP-Fehler: ${loadTeamToBackend.status}`)
       }
 
+      const createdTeam: Team = await loadTeamToBackend.json()
+
+      setTeam(currentTeams => [...currentTeams, createdTeam])
+
+      setTeamName("")
+      setMember1("")
+      setMember2("")
+
+      setIsTeamPopupOpen(false)
+
+
+
+      /*const serverAnswer = await loadTeamToBackend.json()
+      setTeam(serverAnswer.team) //neue Teams aktualisieren*/
+  
+      
+      
+
     } catch (error) {
-      console.error("Fehler beim Erstellen des Teams")
+      console.error("Fehler beim Erstellen des Teams: ", error)
     }
-
-
-    
   }
-
+  const [isTeamPopupOpen, setIsTeamPopupOpen] = useState(false)
 
   return (
     <>
-    <h1> Think different Academy
-    </h1>
-    <p id='health'>{serverStatus}  </p>
-     <input type="button" id="addTeamButton"  > Add new Team</input> 
+    <h1> Think different Academy </h1>
 
-    
-    
+    <p id='health'>{serverStatus}  </p>
+
+    <button 
+      type="button"
+      id="addTeamButton"
+      onClick={() => setIsTeamPopupOpen(true)}
+    >
+      Add new Team
+    </button>
+
+    {team.length > 0 && (
+      <div className="team-list">
+        <h2>
+          Created Teams
+        </h2>
+        {team.map((currentTeam) => (
+          <div key={currentTeam.id} className="team-card">
+            <h3>
+              {currentTeam.name}
+            </h3>
+            <p>
+              ID: {currentTeam.id}
+            </p>
+            <p>
+              Member 1: {currentTeam.member1}
+            </p>
+            <p>
+              Member 2: {currentTeam.member2}
+            </p>
+          </div>
+        ))}
+      </div>
+    )}
+
+    {isTeamPopupOpen && (
+      <div 
+        className="popup-backdrops"
+        onClick={() => setIsTeamPopupOpen(false)}
+      >
+
+        <div
+          className="popup"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="new-team-title"
+          onClick={(event) => event?.stopPropagation()}
+        >
+                
+          <h2 id="new-team-title">New Team</h2>
+
+          <form onSubmit={(event) => {
+            event.preventDefault()
+            addNewTeam()
+          }}>
+
+            <label htmlFor="teamName">Team Name:</label>
+            <input
+              type="text"
+              id="teamName"
+              value={teamName}
+              onChange={(event) => setTeamName(event.target.value)}
+              placeholder="enter team name"
+              required
+            />
+
+            <label htmlFor="member1"> Member 1:</label>
+            <input 
+              type="text"
+              id="member1"
+              value={member1}
+              onChange={(event) => setMember1(event.target.value)}
+              placeholder="Enter first team member"
+            />
+
+            <label htmlFor="member2"> Member 2:</label>
+            <input 
+              type="text"
+              id="member2"
+              value={member2}
+              onChange={(event) => setMember2(event.target.value)}
+              placeholder="Enter first team member"
+            />
+
+            <div className="popup-actions"> 
+
+
+              <button type="submit" className="button-primary"> 
+                Create Team  
+
+              </button>
+
+              <button 
+                type="button" 
+                className="button-secondary"
+                onClick={() => setIsTeamPopupOpen(false)}
+              > 
+                Cancel 
+              </button>
+
+            </div>
+          </form>
+        </div>
+      </div>
+    )}
     </>
   )
 }

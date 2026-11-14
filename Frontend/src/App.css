@@ -181,4 +181,86 @@
     right: 0;
     border-right-color: var(--border);
   }
+
+  .popup-backdrops {
+    position: fixed;
+    inset: 0;
+
+    background-color:turquoise ;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 1000;
+    padding: 16px;
+
+  }
+
+  .popup {
+    width: 100%;
+    max-width: 420px;
+
+    background-color: blueviolet;
+    color: #222;
+
+    padding: 25px;
+    border: 1px solid lightblue;
+
+    box-shadow: 0 10px 40px darkslategrey;
+  }
+
+  .popup form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .popup input {
+    padding: 10px;
+    border: 1px solid lightgrey;
+    border-radius: 6px;
+    font-size: 15px;
+  }
+
+  .popup-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+  }
+
+  .popup-actions button {
+    flex: 1;
+    padding: 11px;
+
+    border: 1px solid;
+    border-radius: 7px;
+
+    font-size: 14px;
+    font-weight: bold;
+
+    cursor: pointer;
+  }
+
+  .button-primary {
+    background-color: darkcyan;
+    color: violet;
+    border-color: #4338ca;
+  }
+
+  .button-secondary{
+    background-color: darkcyan;
+    color: violet;
+    border-color: #4338ca;
+  }
+
+  .popup-actions button:hover {
+    filter: brightness(0.9);
+  }
+
+  .new-team-title {
+    font-size: medium;
+    
+  }
+
 }
