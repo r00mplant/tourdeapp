@@ -182,85 +182,87 @@
     border-right-color: var(--border);
   }
 
-  .popup-backdrops {
-    position: fixed;
-    inset: 0;
+  
 
-    background-color:turquoise ;
+}
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.popup-backdrops {
+  position: fixed;
+  inset: 0;
 
-    z-index: 1000;
-    padding: 16px;
+  background-color:turquoise ;
 
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-  .popup {
-    width: 100%;
-    max-width: 420px;
+  z-index: 1000;
+  padding: 16px;
 
-    background-color: blueviolet;
-    color: #222;
+}
 
-    padding: 25px;
-    border: 1px solid lightblue;
+.popup {
+  width: 100%;
+  max-width: 420px;
 
-    box-shadow: 0 10px 40px darkslategrey;
-  }
+  background-color: blueviolet;
+  color: #222;
 
-  .popup form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
+  padding: 25px;
+  border: 1px solid lightblue;
 
-  .popup input {
-    padding: 10px;
-    border: 1px solid lightgrey;
-    border-radius: 6px;
-    font-size: 15px;
-  }
+  box-shadow: 0 10px 40px darkslategrey;
+}
 
-  .popup-actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 15px;
-  }
+.popup form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 
-  .popup-actions button {
-    flex: 1;
-    padding: 11px;
+.popup input {
+  padding: 10px;
+  border: 1px solid lightgrey;
+  border-radius: 6px;
+  font-size: 15px;
+}
 
-    border: 1px solid;
-    border-radius: 7px;
+.popup-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
 
-    font-size: 14px;
-    font-weight: bold;
+.popup-actions button {
+  flex: 1;
+  padding: 11px;
 
-    cursor: pointer;
-  }
+  border: 1px solid;
+  border-radius: 7px;
 
-  .button-primary {
-    background-color: darkcyan;
-    color: violet;
-    border-color: #4338ca;
-  }
+  font-size: 14px;
+  font-weight: bold;
 
-  .button-secondary{
-    background-color: darkcyan;
-    color: violet;
-    border-color: #4338ca;
-  }
+  cursor: pointer;
+}
 
-  .popup-actions button:hover {
-    filter: brightness(0.9);
-  }
+.button-primary {
+  background-color: darkcyan;
+  color: violet;
+  border-color: #4338ca;
+}
 
-  .new-team-title {
-    font-size: medium;
-    
-  }
+.button-secondary{
+  background-color: darkcyan;
+  color: violet;
+  border-color: #4338ca;
+}
 
+.popup-actions button:hover {
+  filter: brightness(0.9);
+}
+
+.new-team-title {
+  font-size: medium;
+  
 }

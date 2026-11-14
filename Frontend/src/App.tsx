@@ -112,11 +112,13 @@ function App() {
     <button 
       type="button"
       id="addTeamButton"
-      className="border-purple-200 text-sky-150"
+      className="border-purple-200 text-purple-600 hover:border-transparent hover:bg-purple-600 hover:text-white active:bg-purple-700 ..."
       onClick={() => setIsTeamPopupOpen(true)}
     >
       Add new Team
     </button>
+
+    <h2>Test</h2>
 
     {team.length > 0 && (
       <div className="team-list">
@@ -163,17 +165,17 @@ function App() {
             addNewTeam()
           }}>
 
-            <label htmlFor="teamName">Team Name:</label>
+            <label htmlFor="teamName">Team Name: </label>
             <input
               type="text"
               id="teamName"
               value={teamName}
               onChange={(event) => setTeamName(event.target.value)}
-              placeholder="enter team name"
+              placeholder="Enter team name"
               required
-            />
+            /> <br></br>
 
-            <label htmlFor="member1"> Member 1:</label>
+            <label htmlFor="member1"> Member 1: </label>
             <input 
               type="text"
               id="member1"
@@ -182,7 +184,7 @@ function App() {
               placeholder="Enter first team member"
             /> <br></br>
 
-            <label htmlFor="member2"> Member 2:</label>
+            <label htmlFor="member2"> Member 2: </label>
             <input 
               type="text"
               id="member2"
@@ -197,7 +199,7 @@ function App() {
               <button type="submit" className="button-primary"> 
                 Create Team  
 
-              </button>
+              </button> <br></br>
 
               <button 
                 type="button" 
