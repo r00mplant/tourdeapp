@@ -112,7 +112,7 @@ function App() {
     <button 
       type="button"
       id="addTeamButton"
-      className="bg-violett-300"
+      className="border-purple-200 text-sky-150"
       onClick={() => setIsTeamPopupOpen(true)}
     >
       Add new Team
@@ -180,7 +180,7 @@ function App() {
               value={member1}
               onChange={(event) => setMember1(event.target.value)}
               placeholder="Enter first team member"
-            />
+            /> <br></br>
 
             <label htmlFor="member2"> Member 2:</label>
             <input 
@@ -188,8 +188,8 @@ function App() {
               id="member2"
               value={member2}
               onChange={(event) => setMember2(event.target.value)}
-              placeholder="Enter first team member"
-            />
+              placeholder="Enter second team member"
+            /> <br></br>
 
             <div className="popup-actions"> 
 
