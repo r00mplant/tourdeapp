@@ -10,14 +10,13 @@ router = APIRouter(
     tags=["stops"],
 )
 
-@router.get("/stops", response_model=StopListResponse)
+@router.get("/stops")
 def get_stops(response: fastapi.Response, db: Session = Depends(get_db)):
 
-    stops = db.query(Stop).all()
     response.status_code = status.HTTP_200_OK
-    return StopListResponse(stops=stops)
+    return db.query(Stop).all()
 
-@router.get("/stops/:{stop_id}", response_model=StopResponse)
+@router.get("/stops/{stop_id}", response_model=StopResponse)
 def get_stop_by_id(stop_id: int, response: fastapi.Response, db: Session = Depends(get_db)):
     stop = db.query(Stop).filter(Stop.id == stop_id).first()
     if not stop:
