@@ -122,7 +122,7 @@ function App() {
     </div>
     
 
-    <h2>Test</h2>
+    {/*<h2>Test</h2>*/}
 
     {team.length > 0 && (
       <div className="team-list">
