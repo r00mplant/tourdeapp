@@ -107,16 +107,20 @@ function App() {
     <>
     <h1> Think different Academy </h1>
 
-    <p id='health'>{serverStatus}  </p>
+    <p id='health'>Server status: {serverStatus}  </p> 
+    <br></br>
 
-    <button 
-      type="button"
-      id="addTeamButton"
-      className="border-purple-200 text-purple-600 hover:border-transparent hover:bg-purple-600 hover:text-white active:bg-purple-700 ..."
-      onClick={() => setIsTeamPopupOpen(true)}
-    >
-      Add new Team
-    </button>
+    <div>
+      <button 
+        type="button"
+        id="addTeamButton"
+        className="addTeamButton"
+        onClick={() => setIsTeamPopupOpen(true)}
+      >
+        Add new Team
+      </button>
+    </div>
+    
 
     <h2>Test</h2>
 
@@ -126,19 +130,26 @@ function App() {
           Created Teams
         </h2>
         {team.map((currentTeam) => (
-          <div key={currentTeam.id} className="team-card">
+          <div 
+            key={currentTeam.id} 
+            className="team-card">
+
             <h3 className="bg-black-700">
               {currentTeam.name}
             </h3>
+
             <p className="bg-violet-500 text-sky-500">
               ID: {currentTeam.id}
             </p>
+
             <p className="bg-violet-700 text-sky-500">
               Member 1: {currentTeam.member1}
             </p>
+
             <p className="bg-violet-900 text-sky-500">
               Member 2: {currentTeam.member2}
             </p>
+
           </div>
         ))}
       </div>
@@ -146,12 +157,12 @@ function App() {
 
     {isTeamPopupOpen && (
       <div 
-        className="popup-backdrops"
+        className="fixed inset-0 bg-blend-darken backdrop-blur-md flex justify-center items-center z-1000 p-4 "
         onClick={() => setIsTeamPopupOpen(false)}
       >
 
         <div
-          className="popup"
+          className="w-full max-w-110 max-h-220 bg-violet-950 text-gray-100 p-6 border-solid border-2 border-blue-950 shadow-md"
           role="dialog"
           aria-modal="true"
           aria-labelledby="new-team-title"
@@ -169,11 +180,13 @@ function App() {
             <input
               type="text"
               id="teamName"
+              className="..."
               value={teamName}
               onChange={(event) => setTeamName(event.target.value)}
               placeholder="Enter team name"
               required
-            /> <br></br>
+            />
+            <br />
 
             <label htmlFor="member1"> Member 1: </label>
             <input 
@@ -182,7 +195,8 @@ function App() {
               value={member1}
               onChange={(event) => setMember1(event.target.value)}
               placeholder="Enter first team member"
-            /> <br></br>
+            /> 
+            <br />
 
             <label htmlFor="member2"> Member 2: </label>
             <input 
@@ -191,7 +205,8 @@ function App() {
               value={member2}
               onChange={(event) => setMember2(event.target.value)}
               placeholder="Enter second team member"
-            /> <br></br>
+            /> 
+            <br />
 
             <div className="popup-actions"> 
 
@@ -199,7 +214,8 @@ function App() {
               <button type="submit" className="button-primary"> 
                 Create Team  
 
-              </button> <br></br>
+              </button> 
+              <br />
 
               <button 
                 type="button" 

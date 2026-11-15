@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 .counter {
   font-size: 16px;
   padding: 5px 10px;
@@ -186,11 +188,12 @@
 
 }
 
-.popup-backdrops {
+/*.popup-backdrops {
   position: fixed;
   inset: 0;
 
   background-color:turquoise ;
+  background-blend-mode: darken;
 
   display: flex;
   justify-content: center;
@@ -199,9 +202,9 @@
   z-index: 1000;
   padding: 16px;
 
-}
+}*/
 
-.popup {
+/*.popup {
   width: 100%;
   max-width: 420px;
 
@@ -212,7 +215,7 @@
   border: 1px solid lightblue;
 
   box-shadow: 0 10px 40px darkslategrey;
-}
+}*/
 
 .popup form {
   display: flex;
@@ -266,3 +269,22 @@
   font-size: medium;
   
 }
+
+.addTeamButton{
+  @apply border-purple-700
+   bg-purple-600
+   text-gray-200
+   hover:border-transparent
+   hover:bg-purple-500
+   hover:text-white
+   active:bg-purple-700
+   border-2
+   rounded-md
+   w-32;
+}
+
+
+
+/*.addTeamButton {
+  
+  }
