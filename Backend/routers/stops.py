@@ -6,18 +6,18 @@ from schemes.stops import StopListResponse, StopResponse
 from models import Stop
 
 router = APIRouter(
-    prefix="/api/v1/stops",
+    prefix="/api/v1",
     tags=["stops"],
 )
 
-@router.get("/", response_model=StopListResponse)
+@router.get("/stops", response_model=StopListResponse)
 def get_stops(response: fastapi.Response, db: Session = Depends(get_db)):
 
     stops = db.query(Stop).all()
     response.status_code = status.HTTP_200_OK
     return StopListResponse(stops=stops)
 
-@router.get("/:{stop_id}", response_model=StopResponse)
+@router.get("/stops/:{stop_id}", response_model=StopResponse)
 def get_stop_by_id(stop_id: int, response: fastapi.Response, db: Session = Depends(get_db)):
     stop = db.query(Stop).filter(Stop.id == stop_id).first()
     if not stop:
