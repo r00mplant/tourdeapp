@@ -23,4 +23,4 @@ def get_stop_by_id(stop_id: int, response: fastapi.Response, db: Session = Depen
     if not stop:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Stop not found")
     response.status_code = status.HTTP_200_OK
-    return StopResponse(stop=stop)
+    return stop
