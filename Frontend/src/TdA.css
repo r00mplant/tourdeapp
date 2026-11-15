@@ -10,8 +10,25 @@
 
     /*Blue (blue) expresses education*/
     --color-blue: #0070BB; 
-    --color-dark-blue: #0257A5;
+    --color-darkBlue: #0257A5;
 
     --color-white: #ffffff;
     --color-black: #1A1A1A;
+}
+
+/*UNFINISHED: @font-face {
+    font-family: dosis;
+    src: local(Think different Academy EN/TdA _ Fonts/Dosis-VariableFont_wght.ttf)
+}
+
+body {
+    font-family: dosis;
+}*/
+
+.background{
+    background-color: var(--color-darkBlue);
+}
+
+.topLogoLeft{
+    transform: scaleX(-1);
 }
