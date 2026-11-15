@@ -6,8 +6,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.exc import OperationalError
 import uvicorn
 from database import Base, engine
-from routers import health, teams
-from models import Team
+from routers import health, teams, stops
+from models import Team, Stop
+import csv
+from fastapi.staticfiles import StaticFiles
+from seeds.seed import seed_stops
 
 @asynccontextmanager
 async def lifespan(app: fastapi.FastAPI):
@@ -24,6 +27,7 @@ async def lifespan(app: fastapi.FastAPI):
             await asyncio.sleep(2)
 
     Base.metadata.create_all(bind=engine)
+    seed_stops()
     yield
 
 app = fastapi.FastAPI(
@@ -42,6 +46,8 @@ app.add_middleware(
 
 app.include_router(health.router)
 app.include_router(teams.router)
+app.include_router(stops.router)
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)

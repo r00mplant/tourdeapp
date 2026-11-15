@@ -26,10 +26,10 @@ def read_health_db(response: fastapi.Response):
     except SQLAlchemyError:
         raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="Database connection error")
 
-    teams_exists = inspector.has_table("teams")
+    teams_exists = inspector.has_table("stops")
 
     if not teams_exists:
-        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Teams table missing")
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Stops table missing")
     
     response.status_code = status.HTTP_200_OK
-    return DBHealthResponse(db_status="ok", teams="ok")
+    return DBHealthResponse(db_status="ok", stops="ok")

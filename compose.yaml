@@ -1,0 +1,54 @@
+name: tour-de-app
+
+services:
+  frontend:
+    build: ./frontend
+    image: tourdeapp-frontend:latest
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+  backend:
+    build: ./backend
+    image: tourdeapp-backend:latest
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - /app/__pycache__
+    environment:
+      - DATABASE_URL=postgresql+psycopg2://admin:admin1234@postgresql:5432/tourdeapp
+    depends_on:
+      postgresql:
+        condition: service_healthy
+  caddy:
+    build: ./caddy
+    image: tourdeapp-caddy:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./caddy:/app
+      - /app/data
+      - /app/config
+    environment:
+      BACKEND_HOST: backend:8000
+      FRONTEND_HOST: frontend:3001
+
+  postgresql:
+    image: postgres:17-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin1234
+      POSTGRES_DB: tourdeapp
+      PGDATA: /var/lib/postgresql/data/pgdata
+    tmpfs:
+      - /var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d tourdeapp"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    

@@ -5,4 +5,4 @@ class HealthResponse(BaseModel):
 
 class DBHealthResponse(BaseModel):
     db_status: str
-    teams: str
+    stops: str
