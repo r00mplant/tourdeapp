@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError
 from database import get_db
 from schemes.stops import StopListResponse, StopResponse, StopCreateRequest
+from schemes.errors import ErrorResponse
 from models import Stop
 
 router = APIRouter(
@@ -25,11 +26,12 @@ def get_stop_by_id(stop_id: int, response: fastapi.Response, db: Session = Depen
     response.status_code = status.HTTP_200_OK
     return stop
 
-@router.put("/stops/{stop_id}", response_model=StopResponse)
+@router.put("/stops/{stop_id}", response_model=StopResponse | ErrorResponse)
 def update_stop(stop_id: int, stop: StopCreateRequest, response: fastapi.Response, db: Session = Depends(get_db)):
     existing_stop = db.query(Stop).filter(Stop.id == stop_id).first()
     if not existing_stop:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Stop not found")
+        response.status_code = status.HTTP_404_NOT_FOUND
+        return ErrorResponse(message="Stop not found")
     stop_data = stop.model_dump()
     for key, value in stop_data.items():
         setattr(existing_stop, key, value)
@@ -42,11 +44,12 @@ def update_stop(stop_id: int, stop: StopCreateRequest, response: fastapi.Respons
     response.status_code = status.HTTP_200_OK
     return existing_stop
 
-@router.delete("/stops/{stop_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete("/stops/{stop_id}", response_model=ErrorResponse | None)
 def delete_stop(stop_id: int, response: fastapi.Response, db: Session = Depends(get_db)):
     existing_stop = db.query(Stop).filter(Stop.id == stop_id).first()
     if not existing_stop:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Stop not found")
+        response.status_code = status.HTTP_404_NOT_FOUND
+        return ErrorResponse(message="Stop not found")
     try:
         db.delete(existing_stop)
         db.commit()
@@ -56,7 +59,7 @@ def delete_stop(stop_id: int, response: fastapi.Response, db: Session = Depends(
     response.status_code = status.HTTP_204_NO_CONTENT
     return None
 
-@router.post("/stops", response_model=StopResponse)
+@router.post("/stops", response_model=StopResponse | ErrorResponse)
 def create_stop(stop: StopCreateRequest, response: fastapi.Response, db: Session = Depends(get_db)):
    
     stop_data = stop.model_dump()

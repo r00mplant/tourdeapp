@@ -1,5 +1,8 @@
 from pydantic import BaseModel
 from pydantic import Field
+from pydantic import HttpUrl
+
+
 class StopResponse(BaseModel):
     id: int
     name: str
@@ -16,8 +19,8 @@ class StopListResponse(BaseModel):
     model_config = {"from_attributes": True}
 
 class StopCreateRequest(BaseModel):
-    name: str
-    image_url: str | None = Field(default=None)
+    name: str = Field(min_length=1, max_length=255)
+    image_url: HttpUrl | None = Field(default=None, max_length=255) 
     is_transfer: bool | None = Field(default=None)
     x: float | None = Field(default=None)
     y: float | None = Field(default=None)

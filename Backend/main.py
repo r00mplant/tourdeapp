@@ -1,8 +1,14 @@
 import asyncio
+from email.mime import message
+from attrs import field
 import fastapi
+from fastapi import Request
+from fastapi.exceptions import RequestValidationError
+from fastapi import status
 from contextlib import asynccontextmanager
 from fastapi.logger import logger
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from sqlalchemy.exc import OperationalError
 import uvicorn
 from database import Base, engine
@@ -35,6 +41,27 @@ app = fastapi.FastAPI(
     version="1.0.0",
     lifespan=lifespan
 )
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
+
+    errors = exc.errors()
+    error = errors[0] if errors else None
+    field = error["loc"][-1] if error else None
+
+    if  field == "name" and error["type"] == "string_too_short":
+        message = "Name is too short"
+    elif  field == "name" and error["type"] == "string_too_long":
+        message = "Name is too long"
+    elif field == "name" and error["type"] == "value_error.missing":
+        message = "Name is required"
+    else:
+        message = "Invalid request"
+
+    return JSONResponse(
+        status_code=400,
+        content={"error": message},
+    )
 
 app.add_middleware(
     CORSMiddleware,
