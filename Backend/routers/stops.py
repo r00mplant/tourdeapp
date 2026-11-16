@@ -11,7 +11,7 @@ router = APIRouter(
     tags=["stops"],
 )
 
-@router.get("/stops", response_model=list[StopListResponse])
+@router.get("/stops", response_model=list[StopResponse])
 def get_stops(response: fastapi.Response, db: Session = Depends(get_db)):
 
     response.status_code = status.HTTP_200_OK
