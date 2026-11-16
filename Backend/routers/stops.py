@@ -20,11 +20,12 @@ def get_stops(response: fastapi.Response, db: Session = Depends(get_db)):
     response.status_code = status.HTTP_200_OK
     return db.query(Stop).all()
 
-@router.get("/stops/{stop_id}", response_model=StopResponse)
+@router.get("/stops/{stop_id}", response_model=StopResponse | ErrorResponse)
 def get_stop_by_id(stop_id: Annotated[int, Path(gt=0)], response: fastapi.Response, db: Session = Depends(get_db)):
     stop = db.query(Stop).filter(Stop.id == stop_id).first()
     if not stop:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Stop not found")
+        response.status_code = status.HTTP_404_NOT_FOUND
+        return ErrorResponse(error="Not Found", message="Stop not found")
     response.status_code = status.HTTP_200_OK
     return stop
 
@@ -33,7 +34,7 @@ def update_stop(stop_id: Annotated[int, Path(gt=0)], stop: StopCreateRequest, re
     existing_stop = db.query(Stop).filter(Stop.id == stop_id).first()
     if not existing_stop:
         response.status_code = status.HTTP_404_NOT_FOUND
-        return ErrorResponse(message="Stop not found")
+        return ErrorResponse(error="Not Found", message="Stop not found")
     stop_data = stop.model_dump()
     for key, value in stop_data.items():
         setattr(existing_stop, key, value)
@@ -51,7 +52,7 @@ def delete_stop(stop_id: Annotated[int, Path(gt=0)], response: fastapi.Response,
     existing_stop = db.query(Stop).filter(Stop.id == stop_id).first()
     if not existing_stop:
         response.status_code = status.HTTP_404_NOT_FOUND
-        return ErrorResponse(message="Stop not found")
+        return ErrorResponse(error="Not Found", message="Stop not found")
     try:
         db.delete(existing_stop)
         db.commit()
