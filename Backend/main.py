@@ -42,6 +42,19 @@ app = fastapi.FastAPI(
     lifespan=lifespan
 )
 
+@app.exception_handler(fastapi.HTTPException)
+async def http_exception_handler(request: Request, exc: fastapi.HTTPException):
+    if exc.status_code == status.HTTP_401_UNAUTHORIZED:
+        return JSONResponse(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            content={"error": "Unauthorized"},
+        )
+
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={"error": exc.detail},
+    )
+
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(request: Request, exc: RequestValidationError):
 
@@ -50,6 +63,14 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
     field = error["loc"][-1] if error else None
 
     message = "Invalid request"
+
+    if error:
+        if error["type"] == "value_error.missing":
+            message = f"Missing field: {field}"
+        elif error["type"] == "type_error":
+            message = f"Invalid type for field: {field}"
+        elif error["type"] == "value_error":
+            message = f"Invalid value for field: {field}"
 
     return JSONResponse(
         status_code=400,
