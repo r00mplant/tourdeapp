@@ -11,11 +11,11 @@ router = APIRouter(
     tags=["stops"],
 )
 
-@router.get("/stops", response_model=StopListResponse)
+@router.get("/stops", response_model=list[StopListResponse])
 def get_stops(response: fastapi.Response, db: Session = Depends(get_db)):
 
     response.status_code = status.HTTP_200_OK
-    return {"stops": db.query(Stop).all()}
+    return db.query(Stop).all()
 
 @router.get("/stops/{stop_id}", response_model=StopResponse)
 def get_stop_by_id(stop_id: int, response: fastapi.Response, db: Session = Depends(get_db)):
