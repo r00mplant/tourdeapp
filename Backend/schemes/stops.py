@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from pydantic import Field
 from pydantic import HttpUrl, StrictBool
+from pydantic import ConfigDict
 
 
 class StopResponse(BaseModel):
@@ -31,5 +32,5 @@ class StopCreateRequest(BaseModel):
     has_display: bool | None = Field(default=None)
 
     model_config = {"from_attributes": True}
-    model_config = {"ConfigDict": {"extra": "forbid"}}
+    model_config = ConfigDict(extra="forbid")
 
