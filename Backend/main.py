@@ -49,26 +49,7 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
     error = errors[0] if errors else None
     field = error["loc"][-1] if error else None
 
-    if  field == "name" and error["type"] == "string_too_short":
-        message = "Name is too short"
-    elif  field == "name" and error["type"] == "string_too_long":
-        message = "Name is too long"
-    elif field == "name" and error["type"] == "value_error.missing":
-        message = "Name is required"
-    elif field == "wheelchair_accessible" and error["type"] == "value_error.missing":
-        message = "Wheelchair accessibility is required"
-    elif field == "wheelchair_accessible" and error["type"] == "bool_parsing":
-        message = "Wheelchair accessibility must be a boolean value"
-    elif field == "has_shelter" and error["type"] == "value_error.missing":
-        message = "Shelter information is required"
-    elif field == "has_shelter" and error["type"] == "bool_parsing":
-        message = "Shelter information must be a boolean value"
-    elif field == "has_ticket_machine" and error["type"] == "value_error.missing":
-        message = "Ticket machine information is required"
-    elif field == "has_ticket_machine" and error["type"] == "bool_parsing":
-        message = "Ticket machine information must be a boolean value"
-    else:
-        message = "Invalid request"
+    message = "Invalid request"
 
     return JSONResponse(
         status_code=400,

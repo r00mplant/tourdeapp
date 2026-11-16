@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from pydantic import Field
-from pydantic import HttpUrl
+from pydantic import HttpUrl, StrictBool
 
 
 class StopResponse(BaseModel):
@@ -24,10 +24,10 @@ class StopCreateRequest(BaseModel):
     is_transfer: bool | None = Field(default=None)
     x: float | None = Field(default=None)
     y: float | None = Field(default=None)
-    wheelchair_accessible: bool
-    has_shelter: bool
+    wheelchair_accessible: StrictBool
+    has_shelter: StrictBool
     has_bench: bool | None = Field(default=None)
-    has_ticket_machine: bool
+    has_ticket_machine: StrictBool
     has_display: bool | None = Field(default=None)
 
     model_config = {"from_attributes": True}
