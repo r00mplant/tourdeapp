@@ -8,6 +8,15 @@ from database import get_db
 from schemes.stops import StopListResponse, StopResponse, StopCreateRequest
 from schemes.errors import ErrorResponse
 from models import Stop
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+
+ADMIN_KEY = "Kyqc49jIM+5+D0Sed8ZQ671gxkd7W/bBTWjDtZ0Zrgk="
+
+security = HTTPBearer(auto_error=False)
+
+def require_admin(credentials: HTTPAuthorizationCredentials | None = Depends(security)):
+    if not credentials or credentials.credentials != ADMIN_KEY:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid admin key")
 
 router = APIRouter(
     prefix="/api/v1",
@@ -30,7 +39,7 @@ def get_stop_by_id(stop_id: Annotated[int, Path(gt=0)], response: fastapi.Respon
     return stop
 
 @router.put("/stops/{stop_id}", response_model=StopResponse | ErrorResponse)
-def update_stop(stop_id: Annotated[int, Path(gt=0)], stop: StopCreateRequest, response: fastapi.Response, db: Session = Depends(get_db)):
+def update_stop(stop_id: Annotated[int, Path(gt=0)], stop: StopCreateRequest, response: fastapi.Response, db: Session = Depends(get_db), admin: None = Depends(require_admin)):
     existing_stop = db.query(Stop).filter(Stop.id == stop_id).first()
     if not existing_stop:
         response.status_code = status.HTTP_404_NOT_FOUND
@@ -48,7 +57,7 @@ def update_stop(stop_id: Annotated[int, Path(gt=0)], stop: StopCreateRequest, re
     return existing_stop
 
 @router.delete("/stops/{stop_id}", response_model=ErrorResponse | None)
-def delete_stop(stop_id: Annotated[int, Path(gt=0)], response: fastapi.Response, db: Session = Depends(get_db)):
+def delete_stop(stop_id: Annotated[int, Path(gt=0)], response: fastapi.Response, db: Session = Depends(get_db), admin: None = Depends(require_admin)):
     existing_stop = db.query(Stop).filter(Stop.id == stop_id).first()
     if not existing_stop:
         response.status_code = status.HTTP_404_NOT_FOUND
@@ -63,7 +72,7 @@ def delete_stop(stop_id: Annotated[int, Path(gt=0)], response: fastapi.Response,
     return None
 
 @router.post("/stops", response_model=StopResponse | ErrorResponse)
-def create_stop(stop: StopCreateRequest, response: fastapi.Response, db: Session = Depends(get_db)):
+def create_stop(stop: StopCreateRequest, response: fastapi.Response, db: Session = Depends(get_db), admin: None = Depends(require_admin)):
    
     stop_data = stop.model_dump()
     new_stop = Stop(**stop_data)
