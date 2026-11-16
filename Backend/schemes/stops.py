@@ -31,4 +31,5 @@ class StopCreateRequest(BaseModel):
     has_display: bool | None = Field(default=None)
 
     model_config = {"from_attributes": True}
+    model_config = {"ConfigDict": {"extra": "forbid"}}
 

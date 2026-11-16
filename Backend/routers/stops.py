@@ -1,3 +1,5 @@
+from fastapi import Path
+from typing import Annotated
 import fastapi
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
@@ -19,7 +21,7 @@ def get_stops(response: fastapi.Response, db: Session = Depends(get_db)):
     return db.query(Stop).all()
 
 @router.get("/stops/{stop_id}", response_model=StopResponse)
-def get_stop_by_id(stop_id: int, response: fastapi.Response, db: Session = Depends(get_db)):
+def get_stop_by_id(stop_id: Annotated[int, Path(gt=0)], response: fastapi.Response, db: Session = Depends(get_db)):
     stop = db.query(Stop).filter(Stop.id == stop_id).first()
     if not stop:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Stop not found")
@@ -27,7 +29,7 @@ def get_stop_by_id(stop_id: int, response: fastapi.Response, db: Session = Depen
     return stop
 
 @router.put("/stops/{stop_id}", response_model=StopResponse | ErrorResponse)
-def update_stop(stop_id: int, stop: StopCreateRequest, response: fastapi.Response, db: Session = Depends(get_db)):
+def update_stop(stop_id: Annotated[int, Path(gt=0)], stop: StopCreateRequest, response: fastapi.Response, db: Session = Depends(get_db)):
     existing_stop = db.query(Stop).filter(Stop.id == stop_id).first()
     if not existing_stop:
         response.status_code = status.HTTP_404_NOT_FOUND
@@ -45,7 +47,7 @@ def update_stop(stop_id: int, stop: StopCreateRequest, response: fastapi.Respons
     return existing_stop
 
 @router.delete("/stops/{stop_id}", response_model=ErrorResponse | None)
-def delete_stop(stop_id: int, response: fastapi.Response, db: Session = Depends(get_db)):
+def delete_stop(stop_id: Annotated[int, Path(gt=0)], response: fastapi.Response, db: Session = Depends(get_db)):
     existing_stop = db.query(Stop).filter(Stop.id == stop_id).first()
     if not existing_stop:
         response.status_code = status.HTTP_404_NOT_FOUND
