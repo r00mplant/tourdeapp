@@ -48,3 +48,22 @@ body {
 .topLogoLeft{
     transform: scaleX(-1);
 }
+
+.topNavBar {
+    @apply
+    bg-blue
+    text-white
+    flex
+    flex-row
+    items-center
+    justify-center
+    gap-2
+}
+
+.navigationButton {
+    @apply
+    shadow-sm
+    bg-cyan
+    hover:bg-tean
+
+}
