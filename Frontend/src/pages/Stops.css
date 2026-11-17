@@ -1,0 +1,17 @@
+@import "tailwindcss"
+
+@theme {
+    /*Green (lime) expresses Growth*/
+    --color-lime: #91F5AD; 
+    --color-green: #6DD4B1;
+
+    --color-tean: #49B3B4;
+    --color-cyan: #2592B8;
+
+    /*Blue (blue) expresses education*/
+    --color-blue: #0070BB; 
+    --color-darkBlue: #0257A5;
+
+    --color-white: #ffffff;
+    --color-black: #1A1A1A;
+}

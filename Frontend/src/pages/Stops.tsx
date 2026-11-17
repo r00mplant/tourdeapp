@@ -80,15 +80,21 @@ function Stops() {
 
         {
             stops.map((stop) => (
-                <div key={stop.id}>
-                    <h2>{stop.name}</h2>
+                <div key={stop.id}
+                className={`flex items-center gap-5 ${
+                    stop.id % 2 === 0
+                    ? "flex-row-reverse"
+                    : "flex-row"
+                }`}
+                >
                     {
                         stop.image_url 
                         ? <div><img src={stop.image_url} /></div>
                         :   <div> <p> no Image </p> </div>
                     }
+                    <h2>{stop.name}</h2> <br />
                     
-                    <p>ID: {stop.id}</p>
+                    <p>ID: {stop.id}</p> 
                     <div>
                         {
                             stop.wheelchair_accessable

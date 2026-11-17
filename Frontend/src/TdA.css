@@ -25,6 +25,21 @@ body {
     font-family: dosis;
 }*/
 
+* {
+    box-sizing: border-box;
+}
+
+html, body, #root {
+    width: auto;
+    min-height: auto;
+    margin: 0;
+}
+
+body {
+    min-width: 320px;
+    overflow-x: hidden;
+}
+
 .background{
     background-color: var(--color-darkBlue);
 }
