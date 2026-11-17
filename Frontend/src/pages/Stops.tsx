@@ -81,51 +81,55 @@ function Stops() {
         {
             stops.map((stop) => (
                 <div key={stop.id}
-                className={`flex items-center gap-5 ${
+                className={`flex grid-cols-1 md:grid-cols-2 items-center w-full ${
                     stop.id % 2 === 0
-                    ? "flex-row-reverse"
-                    : "flex-row"
+                    ? "flex-row-reverse text-right"
+                    : "flex-row text-left"
                 }`}
                 >
                     {
                         stop.image_url 
-                        ? <div><img src={stop.image_url} /></div>
+                        ? <div><img src={stop.image_url} className="scale-90" /></div>
                         :   <div> <p> no Image </p> </div>
-                    }
-                    <h2>{stop.name}</h2> <br />
-                    
-                    <p>ID: {stop.id}</p> 
-                    <div>
-                        {
-                            stop.wheelchair_accessable
-                            ? <p>Accessible with Wheelchai</p>
-                            : <p>Not accessible with Wheelchair</p>
-                        }
-                    </div>
-                    
-                    <br />
+                    } 
 
-                    <div>
-                        {
-                            stop.has_shelter
-                            ? <p>Has a shelter</p>
-                            : <p>Has no shelter</p>
-                        }
-                    </div>
-                    
-                    <br />
-                    <div>
-                        {
-                            stop.has_ticket_machene
-                            ? <p>Ticket machene: available</p>
-                            : <p>Ticket machene: not available</p>
-                        }
-                    </div>
-                    <br />
+                    <table className="tg w-full">
+                        <thead>
+                            <tr>
+                                <th> <h2>{stop.name}</h2> <br /> <p>ID: {stop.id}</p> </th>
+                            </tr>
+                        </thead>    
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div>
+                                        {
+                                            stop.wheelchair_accessable
+                                            ? <p>Accessible with Wheelchai</p>
+                                            : <p>Not accessible with Wheelchair</p>
+                                        }
+                                    </div>
+                                    
+                                    <div>
+                                        {
+                                            stop.has_shelter
+                                            ? <p>Has a shelter</p>
+                                            : <p>Has no shelter</p>
+                                        }
+                                    </div>
 
-                    
-                    
-
+                                    <div>
+                                        {
+                                            stop.has_ticket_machene
+                                            ? <p>Ticket machene: available</p>
+                                            : <p>Ticket machene: not available</p>
+                                        }
+                                    </div>
+                                    
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>      
                 </div>
             ))
         }
