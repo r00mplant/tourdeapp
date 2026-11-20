@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+@font-face {
+    font-family: 'Dosis';
+    src: url('./Think different Academy EN/TdA _ Fonts/Dosis-VariableFont_wght.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+
+}
+
 @theme {
     /*Green (lime) expresses Growth*/
     --color-lime: #91F5AD; 
@@ -14,6 +23,8 @@
 
     --color-white: #ffffff;
     --color-black: #1A1A1A;
+
+    --font-sans: "Dosis", ui-sans-serif, system-ui, sans-serif;
 }
 
 /*UNFINISHED: @font-face {
@@ -25,9 +36,12 @@ body {
     font-family: dosis;
 }*/
 
-* {
-    @apply
-    box-border;
+@layer base{
+    * {
+        font-family: var(--font-sans);
+        @apply 
+        box-border;
+    }
 }
 
 html, body, #root {

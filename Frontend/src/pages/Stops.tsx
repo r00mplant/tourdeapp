@@ -79,7 +79,14 @@ function Stops() {
             </h1>
 
         {
-            stops.map((stop) => (
+            stops.length === 0
+            ? <div>
+                <h2>
+                    This system holds no stops
+                </h2>
+            </div>
+
+            : stops.map((stop) => (
                 <div key={stop.id}
                 className={`flex grid-cols-1 md:grid-cols-2 items-center w-full ${
                     stop.id % 2 === 0
@@ -132,7 +139,10 @@ function Stops() {
                     </table>      
                 </div>
             ))
-        }
+        }    
+        
+            
+        
 
         </div>
         </>
