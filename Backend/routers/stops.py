@@ -2,6 +2,7 @@ from urllib import response
 from fastapi import Path
 from typing import Annotated
 import fastapi
+from fastapi import Request
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError
@@ -25,10 +26,17 @@ router = APIRouter(
 )
 
 @router.get("/stops", response_model=list[StopResponse])
-def get_stops(response: fastapi.Response, db: Session = Depends(get_db)):
+def get_stops(response: fastapi.Response, search: str | None = None, db: Session = Depends(get_db)):
+
+    query = db.query(Stop)
+
+    if  search:
+        response.status_code = status.HTTP_200_OK
+        return query.filter(Stop.name.ilike(f"%{search}%")).all()
+
 
     response.status_code = status.HTTP_200_OK
-    return db.query(Stop).all()
+    return query.all()
 
 @router.get("/stops/{stop_id}", response_model=StopResponse | ErrorResponse)
 def get_stop_by_id(stop_id: Annotated[int, Path(gt=0)], response: fastapi.Response, db: Session = Depends(get_db)):
