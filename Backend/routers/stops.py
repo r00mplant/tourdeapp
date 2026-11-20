@@ -26,15 +26,28 @@ router = APIRouter(
 )
 
 @router.get("/stops", response_model=list[StopResponse])
-def get_stops(response: fastapi.Response, search: str | None = None, db: Session = Depends(get_db)):
+def get_stops(response: fastapi.Response,
+               name: str | None = None,
+               wheelchair_accessible: bool | None = None,
+               has_shelter: bool | None = None,
+               ticket_machine_available: bool | None = None,
+                db: Session = Depends(get_db)):
 
     query = db.query(Stop)
 
-    if  search:
-        response.status_code = status.HTTP_200_OK
-        return query.filter(Stop.name.ilike(f"%{search}%")).all()
+    if name is not None:
+        query = query.filter(Stop.name.ilike(f"%{name}%"))
+    if wheelchair_accessible is not None:
+        query = query.filter(Stop.wheelchair_accessible == wheelchair_accessible)
+    if has_shelter is not None:
+        query = query.filter(Stop.has_shelter == has_shelter)
+    if ticket_machine_available is not None:
+        query = query.filter(Stop.has_ticket_machine == ticket_machine_available)
 
-
+    if query.count() == 0:
+        response.status_code = status.HTTP_404_NOT_FOUND
+        return []
+    
     response.status_code = status.HTTP_200_OK
     return query.all()
 
