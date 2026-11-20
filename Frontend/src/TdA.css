@@ -78,5 +78,5 @@ body {
     shadow-sm
     bg-cyan
     hover:bg-tean
-
+    hover:cursor-pointer
 }

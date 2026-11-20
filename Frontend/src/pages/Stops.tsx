@@ -107,7 +107,7 @@ function Stops() {
                 >
                     {
                         stop.image_url 
-                        ? <div><img src={stop.image_url} className="scale-90" onClick={() => (
+                        ? <div><img src={stop.image_url} className="scale-90 hover:cursor-pointer" onClick={() => (
                             navigateTo(`./${stop.id}`)
                         )}/></div>
                         :   <div> <p> no Image </p> </div>
@@ -145,7 +145,7 @@ function Stops() {
                                             : <p>Ticket machene: not available</p>
                                         }
                                     </div>
-                                    <button className="navigationButton" onClick={() => (
+                                    <button className="navigationButton hover:cursor-pointer" onClick={() => (
                                         navigateTo(`./${stop.id}`)
                                     )}>
                                         Visit the Stop!
