@@ -108,7 +108,7 @@ function Stops() {
                     <table className="tg w-full">
                         <thead>
                             <tr>
-                                <th> <h2>{stop.name}</h2> <br /> <p>ID: {stop.id}</p> </th>
+                                <th> <h2>{stop.name}</h2> </th>
                             </tr>
                         </thead>    
                         <tbody>
