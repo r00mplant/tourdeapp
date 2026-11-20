@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import "./Stops.css"
+import { useNavigate } from "react-router-dom";
 
 function Stops() {
 
@@ -69,6 +70,8 @@ function Stops() {
     listStops()
 
     }, []);  
+
+    const navigateTo = useNavigate()
     
 
     return (
@@ -96,7 +99,9 @@ function Stops() {
                 >
                     {
                         stop.image_url 
-                        ? <div><img src={stop.image_url} className="scale-90" /></div>
+                        ? <div><img src={stop.image_url} className="scale-90" onClick={() => (
+                            navigateTo(`./${stop.id}`)
+                        )}/></div>
                         :   <div> <p> no Image </p> </div>
                     } 
 
@@ -132,6 +137,11 @@ function Stops() {
                                             : <p>Ticket machene: not available</p>
                                         }
                                     </div>
+                                    <button className="navigationButton" onClick={() => (
+                                        navigateTo(`./${stop.id}`)
+                                    )}>
+                                        Visit the Stop!
+                                    </button>
                                     
                                 </td>
                             </tr>

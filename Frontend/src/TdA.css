@@ -2,11 +2,10 @@
 
 @font-face {
     font-family: 'Dosis';
-    src: url('./Think different Academy EN/TdA _ Fonts/Dosis-VariableFont_wght.ttf') format('truetype');
+    src: url('public/Think different Academy EN/TdA _ Fonts/Dosis-VariableFont_wght.ttf') format('truetype');
     font-weight: 100 900;
     font-style: normal;
     font-display: swap;
-
 }
 
 @theme {
@@ -36,13 +35,13 @@ body {
     font-family: dosis;
 }*/
 
-@layer base{
-    * {
-        font-family: var(--font-sans);
-        @apply 
-        box-border;
-    }
+
+* {
+    font-family: 'Dosis', sans-serif;
+    @apply 
+    box-border;
 }
+
 
 html, body, #root {
     width: auto;
