@@ -21,7 +21,7 @@ function StopDetail() {
 
     useEffect(() => {
         async function getStopByNumber() {
-        const responseToStop = await fetch("/api/v1/stops/1")
+        const responseToStop = await fetch(`/api/v1/stops/${stopId}`)
 
         const stopById : Stop = await responseToStop.json()
         setDetailledStop(stopById)
@@ -43,9 +43,6 @@ function StopDetail() {
                     <h2>
                         {detailledStop.name}
                     </h2>
-                    <p>
-                        ID: {detailledStop.id}
-                    </p>
                     {
                         detailledStop.image_url
                         ? <div><img src={detailledStop.image_url} className="w-1/2 h-auto block mx-auto" alt="" /></div>

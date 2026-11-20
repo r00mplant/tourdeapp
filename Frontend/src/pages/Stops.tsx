@@ -48,9 +48,9 @@ function Stops() {
             const newStop = new Stop (
                 numStops[i].id,
                 numStops[i].name,
-                numStops[i].wheelchair_accessable,
+                numStops[i].wheelchair_accessible,
                 numStops[i].has_shelter,
-                numStops[i].has_ticket_machene,
+                numStops[i].has_ticket_machine,
                 numStops[i].image_url,
             );
 
@@ -71,15 +71,23 @@ function Stops() {
 
     }, []);  
 
-    const navigateTo = useNavigate()
-    
+    const [query, setQuery] = useState()
 
+    async function search() {
+        setQuery(searchInput)
+    }
+
+    const navigateTo = useNavigate()
     return (
         <>
         <div>
             <h1>
                 Stops: 
             </h1>
+
+            <div>   
+                <input type="text" className="searchInput"/>
+            </div>
 
         {
             stops.length === 0
@@ -108,7 +116,7 @@ function Stops() {
                     <table className="tg w-full">
                         <thead>
                             <tr>
-                                <th> <h2>{stop.name}</h2> <br /> <p>ID: {stop.id}</p> </th>
+                                <th> <h2>{stop.name}</h2> </th>
                             </tr>
                         </thead>    
                         <tbody>
