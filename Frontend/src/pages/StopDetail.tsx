@@ -70,7 +70,7 @@ function StopDetail() {
                     }
                 </div>
                )
-               : <div> <p>Loading Stop...</p></div>  
+               : <div> <p>Loading Stops...</p></div>  
             } 
         </div>
         </>

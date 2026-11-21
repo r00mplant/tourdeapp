@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react"
+import { cloneElement, useEffect, useState } from "react"
 import "./Stops.css"
 import { useNavigate } from "react-router-dom";
+import TextField from "@mui/material/TextField"
 
 function Stops() {
 
@@ -71,10 +72,27 @@ function Stops() {
 
     }, []);  
 
-    const [query, setQuery] = useState()
+    const [searchStopName, setSearchStopName] = useState("")
+    const [has_shelter , setHasShelter] = useState<boolean | undefined>(undefined)
+    const [has_ticket_machine , getHasTicketMachine] = useState<boolean | undefined> (undefined)
+    const [wheelchair_accessible, setWheelchairAccessible ] = useState<boolean | undefined> (undefined)
+
+    const searchStops = async () => {
+        const params = new URLSearchParams();
+        params.append("name" , searchStopName);
+
+        const responseToStopSearch = await fetch(
+            `/api/v1/stops?${params.toString()}`
+        );
+
+        const searchedStops = await responseToStopSearch.json();
+
+        
+
+    }
 
     async function search() {
-        setQuery(searchInput)
+        
     }
 
     const navigateTo = useNavigate()
@@ -86,16 +104,22 @@ function Stops() {
             </h1>
 
             <div>   
-                <input type="text" className="searchInput"/>
+                <TextField 
+                    label="Search for Stops"
+                    value={searchStopName}
+                    variant="outlined"
+                    id="outlined-basics"
+                    onChange={(event) => setSearchStopName(event.target.value)} 
+                />
             </div>
 
         {
             stops.length === 0
-            ? <div>
-                <h2>
-                    This system holds no stops
-                </h2>
-            </div>
+            ?   <div>
+                    <h2>
+                        This system holds no stops
+                    </h2>
+                </div>
 
             : stops.map((stop) => (
                 <div key={stop.id}
@@ -125,8 +149,8 @@ function Stops() {
                                     <div>
                                         {
                                             stop.wheelchair_accessable
-                                            ? <p>Accessible with Wheelchai</p>
-                                            : <p>Not accessible with Wheelchair</p>
+                                            ? <p>Accessible with wheelchair</p>
+                                            : <p>Not accessible with wheelchair</p>
                                         }
                                     </div>
                                     
