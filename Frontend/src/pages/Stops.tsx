@@ -79,7 +79,8 @@ function Stops() {
     const [has_shelter , setHasShelter] = useState<boolean | undefined>(undefined)
     const [ticket_machine_available, setTicketMacheneAvailable] = useState<boolean | undefined> (undefined)
     const [wheelchair_accessible, setWheelchairAccessible ] = useState<boolean | undefined> (undefined)
-    const [searched, setSearched] = useState<boolean> (false)
+    const [searchE, setSearchE] = useState<boolean> (false)
+    const [searchError, setSearchError] = useState<string | null>(null)
 
 
     const searchStops = async () => {
@@ -103,6 +104,17 @@ function Stops() {
         );
 
         console.log("geschickter Befehlsteil: ", params.toString())
+
+        if (responseToStopSearch.status === 404) {
+            setSearchError("No stops match this filter")
+            setSearchE(true)
+        }
+
+        if (!responseToStopSearch.ok) {
+            setSearchError(String(responseToStopSearch.status))
+            console.error("Server Error: ", searchError)
+        }
+
 
         const searchedStops = await responseToStopSearch.json();  
 
@@ -258,15 +270,16 @@ function Stops() {
 
                 </FormControl>
             </div>
-            </div>
+        </div>
 
         {
             stops.length === 0
-            ?   <div>
-                    <h2>
-                        This system holds no stops
-                    </h2>
-                </div>
+            ?   ( searchE === true
+                ? <p> The filter does not match the systems stops</p>
+                : <p> This system holds no stops </p>
+            )
+            
+                
 
             : stops.map((stop) => (
                 <div key={stop.id}

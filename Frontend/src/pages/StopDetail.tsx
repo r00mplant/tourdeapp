@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import "./Stops"
 import "./StopDetail.css"
 
@@ -31,6 +31,8 @@ function StopDetail() {
     getStopByNumber()
     }, [stopId]) ;
 
+    const navigateTo = useNavigate()
+
 
     
 
@@ -48,6 +50,13 @@ function StopDetail() {
                         ? <div><img src={detailledStop.image_url} className="w-1/2 h-auto block mx-auto" alt="" /></div>
                         : <div> <p>Stop has no image</p> </div>
                     }
+                    <button className="navigationButton"
+                    onClick={() => (
+                        navigateTo("/stops")
+                    )}
+                    >
+                        Back
+                    </button>
                     <p>
                         At this stop is located
                     </p>
