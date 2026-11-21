@@ -1,7 +1,7 @@
 import { cloneElement, useEffect, useState } from "react"
 import "./Stops.css"
 import { useNavigate } from "react-router-dom";
-import TextField from "@mui/material/TextField"
+import {FormControl, InputLabel, Select, MenuItem, TextField} from "@mui/material"
 
 function Stops() {
 
@@ -34,7 +34,6 @@ function Stops() {
 
     const [stops, setStops] = useState<Stop[]>([]);
 
-    useEffect(() => {
         async function listStops() {
         let stopId : number = 1
 
@@ -68,34 +67,84 @@ function Stops() {
         
     }
 
-    listStops()
+    useEffect(() => {
+        listStops()
+    }, []);
 
-    }, []);  
+    
+
+      
 
     const [searchStopName, setSearchStopName] = useState("")
     const [has_shelter , setHasShelter] = useState<boolean | undefined>(undefined)
-    const [has_ticket_machine , getHasTicketMachine] = useState<boolean | undefined> (undefined)
+    const [ticket_machine_available, setTicketMacheneAvailable] = useState<boolean | undefined> (undefined)
     const [wheelchair_accessible, setWheelchairAccessible ] = useState<boolean | undefined> (undefined)
+    const [searched, setSearched] = useState<boolean> (false)
+
 
     const searchStops = async () => {
         const params = new URLSearchParams();
         params.append("name" , searchStopName);
 
+        if (has_shelter !== undefined) {
+            params.append("has_shelter", String(has_shelter))
+        }
+
+        if (ticket_machine_available !== undefined) {
+            params.append("ticket_machine_available", String(ticket_machine_available))
+        }
+
+        if (wheelchair_accessible !== undefined) {
+            params.append("wheelchair_accessible", String(wheelchair_accessible))
+        }
+
         const responseToStopSearch = await fetch(
             `/api/v1/stops?${params.toString()}`
         );
 
-        const searchedStops = await responseToStopSearch.json();
+        console.log("geschickter Befehlsteil: ", params.toString())
 
-        
+        const searchedStops = await responseToStopSearch.json();  
+
+        let stopId: number
+        stopId = searchedStops.length 
+
+        const newSearchedStops: Stop[] = [];
+
+        for(let i = 0; i < stopId; i++) {
+            const newStop = new Stop (
+                searchedStops[i].id,
+                searchedStops[i].name,
+                searchedStops[i].wheelchair_accessible,
+                searchedStops[i].has_shelter,
+                searchedStops[i].has_ticket_machine,
+                searchedStops[i].image_url,
+            );
+
+            newSearchedStops.push(newStop);
+            
+        }
+
+        console.log("Erstellte gesuchte Stops: ", newSearchedStops)
+
+
+        setStops(newSearchedStops);
+
 
     }
 
-    async function search() {
+    function clearSearch() {
+        setSearchStopName("")
+        setHasShelter(undefined)
+        setTicketMacheneAvailable(undefined)
+        setWheelchairAccessible(undefined)
+        
+        listStops()
         
     }
 
     const navigateTo = useNavigate()
+
     return (
         <>
         <div>
@@ -103,7 +152,7 @@ function Stops() {
                 Stops: 
             </h1>
 
-            <div>   
+            <div className="max-w-1/2 ">   
                 <TextField 
                     label="Search for Stops"
                     value={searchStopName}
@@ -111,6 +160,104 @@ function Stops() {
                     id="outlined-basics"
                     onChange={(event) => setSearchStopName(event.target.value)} 
                 />
+                <button className="navigationButton" onClick={() => (
+                    searchStops()
+                )}>
+                    Search
+                </button>
+
+                <button className="navigationButton"
+                onClick={() => (
+                    clearSearch()
+                )}>
+                    clear Search 
+                </button>
+            
+            <div className="selection_field">
+                <FormControl>
+                    <InputLabel> Has Shelter </InputLabel>
+
+                    <Select 
+                    value={has_shelter === undefined
+                        ? ""
+                        : String(has_shelter)
+                    }
+                    label="Has Shelter"
+                    onChange={(event) => {
+                        const value = event.target.value;
+
+                        setHasShelter(
+                            value === ""
+                            ? undefined
+                            : value === "true"
+                        );
+                    }}
+                    >
+                        <MenuItem value=""> -- </MenuItem> 
+                        <MenuItem value="true"> true </MenuItem>
+                        <MenuItem value="false"> false </MenuItem>
+                    </Select>
+
+
+
+                </FormControl>
+             
+                <FormControl>
+                    <InputLabel> Wheelchair accessible </InputLabel>
+
+                    <Select 
+                    value={wheelchair_accessible === undefined
+                        ? ""
+                        : String(wheelchair_accessible)
+                    }
+                    label="Has Shelter"
+                    onChange={(event) => {
+                        const value = event.target.value;
+
+                        setWheelchairAccessible(
+                            value === ""
+                            ? undefined
+                            : value === "true"
+                        );
+                    }}
+                    >
+                        <MenuItem value=""> -- </MenuItem> 
+                        <MenuItem value="true"> true </MenuItem>
+                        <MenuItem value="false"> false </MenuItem>
+                    </Select>
+
+
+
+                </FormControl>
+            
+                <FormControl>
+                    <InputLabel> Ticket machene available </InputLabel>
+
+                    <Select 
+                    value={ticket_machine_available === undefined
+                        ? ""
+                        : String(ticket_machine_available)
+                    }
+                    label="Has Shelter"
+                    onChange={(event) => {
+                        const value = event.target.value;
+
+                        setTicketMacheneAvailable(
+                            value === ""
+                            ? undefined
+                            : value === "true"
+                        );
+                    }}
+                    >
+                        <MenuItem value=""> -- </MenuItem> 
+                        <MenuItem value="true"> true </MenuItem>
+                        <MenuItem value="false"> false </MenuItem>
+                    </Select>
+
+
+
+                </FormControl>
+            </div>
             </div>
 
         {
