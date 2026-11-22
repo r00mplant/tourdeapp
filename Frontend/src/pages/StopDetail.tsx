@@ -9,6 +9,7 @@ function StopDetail() {
     const stopId = Number(stop_id)
 
     const [detailledStop, setDetailledStop] = useState<Stop | null>(null);
+    const  [serverError, setServerError] = useState<string | null> (null)
 
     interface Stop {
         id: number;
@@ -21,12 +22,39 @@ function StopDetail() {
 
     useEffect(() => {
         async function getStopByNumber() {
-        const responseToStop = await fetch(`/api/v1/stops/${stopId}`)
+            try {
+                const responseToStop = await fetch(`/api/v1/stops/${stopId}`)
+                if (!responseToStop.ok) {
+                    if (responseToStop.status === 404) {
+                        throw new Error("The requested stop was not found")
+                    }
 
-        const stopById : Stop = await responseToStop.json()
-        setDetailledStop(stopById)
+                    throw new Error(`Server Error (${responseToStop.status}). Pleade try again later`)
+                    
+                }
+                 
+                const stopById : Stop = await responseToStop.json()
+                setDetailledStop(stopById)
+            } catch (error) {
+                if (error instanceof TypeError) {
+                    setServerError("Api not reachable")
+                    throw new Error("Api not reachable")
+                } else if (error instanceof Error) {
+                    setServerError(error.message)
+                } else {
+                    setServerError("unknown error occured")
+                }
 
-    }
+                throw error
+                    
+            }
+        
+
+
+
+            
+
+        }
     
     getStopByNumber()
     }, [stopId]) ;
@@ -57,30 +85,44 @@ function StopDetail() {
                     >
                         Back
                     </button>
-                    <p>
-                        At this stop is located
-                    </p>
                     {
-                        detailledStop.has_shelter
-                        ? <p>A shelter</p>
-                        : <p>No shelter</p>
-                    }
+                        serverError !== null
                     
-                    {
-                        detailledStop.has_ticket_machene
-                        ? <p>A ticket machene</p>
-                        : <p>No ticket machene</p>
-                    }
+                        ? (<p> {serverError} </p> )                       
+                    
+                    : (<div>
+                        <p>
+                            At this stop is located
+                        </p>
+                        {
+                            detailledStop.has_shelter
+                            ? <p>A shelter</p>
+                            : <p>No shelter</p>
+                        }
+                    
+                        {
+                            detailledStop.has_ticket_machene
+                            ? <p>A ticket machene</p>
+                            : <p>No ticket machene</p>
+                        }
 
-                    {
-                        detailledStop.wheelchair_accessable
-                        ? <p>And it is accessible with a wheelchair</p>
-                        : <p>But it is not accessible with a wheelchair</p>
+                        {
+                            detailledStop.wheelchair_accessable
+                            ? <p>And it is accessible with a wheelchair</p>
+                            : <p>But it is not accessible with a wheelchair</p>
+                        }
+                    </div>)
                     }
                 </div>
                )
                : <div> <p>Loading Stops...</p></div>  
+               
             } 
+            {
+                serverError !== null && (
+                    <p> {serverError} </p>
+                )
+            }
         </div>
         </>
     )
