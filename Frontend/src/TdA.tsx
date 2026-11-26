@@ -3,12 +3,16 @@ import './TdA.css'
 //import './Stylesheet.css'
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import Home from  "./pages/Home"
-import './pages/StopDetail'
+
 
 import Stops from "./pages/Stops"
-import './pages/Stops.css'
-import StopDetail from "./pages/StopDetail";
+import './pages/Stops'
 
+import StopDetail from "./pages/StopDetail";
+import './pages/StopDetail'
+
+import Lines from "./pages/Lines";
+import './pages/Lines'
 
 function TdA() {
     const navigateTo = useNavigate()
@@ -29,13 +33,22 @@ function TdA() {
             <button className="navigationButton" onClick={() => (
                 navigateTo('/')
             )}>
-                Home </button>
+                Home 
+            </button>
+
+            <button className="navigationButton" onClick={() => (
+                navigateTo('/lines')
+            )}>
+                Lines
+            </button>
+
 
         </div>        
             <Routes>
                 <Route path="/" element={<Home/>} />
                 <Route path="/stops" element={<Stops />} />
                 <Route path="/stops/:stop_id" element={<StopDetail />} />
+                <Route path="/lines" element={<Lines />} />
             </Routes>        
         </>
     )

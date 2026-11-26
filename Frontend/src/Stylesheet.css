@@ -202,5 +202,31 @@
 }
 
 @layer base {
+    * {
+        border-color: var(--color-border);
+        font-family: 'Dosis', sans-serif;
+        @apply
+        box-border;
+    }
 
+    body {
+        background-color: var(--color-bg-page);
+        color: var(--color-text-body);
+        font-family: 'Dosis';
+        overflow-x: hidden;
+        min-width: 320px;
+    }
+
+    html, body, #root {
+        width: auto;
+        min-height: auto;
+        margin: 0;
+    }
+    h1, h2, h3, h4, h5, h6 {
+    color: var(--color-text-heading);
+    font-weight: 700;
+    }
+    a { color: var(--color-text-link);}
+    p { margin: 0;}
+    
 }
