@@ -2,7 +2,7 @@ import csv
 from pathlib import Path
 from sqlalchemy.orm import Session
 from database import engine
-from models import Team, Stop
+from models import Team, Stop, Line
 
 csv_path = Path(__file__).parent / "stops.csv"
 
@@ -26,4 +26,21 @@ def seed_stops(db: Session = Session(bind=engine)):
                 )
                 stops.append(stop)
             db.add_all(stops)
+            db.commit()
+
+def seed_lines(db: Session = Session(bind=engine)):
+    if not db.query(Line).first():
+        csv_path = Path(__file__).parent / "lines.csv"
+        with open(csv_path, newline="", encoding="utf-8") as csvfile:
+            reader = csv.DictReader(csvfile)
+            lines = []
+            for row in reader:
+                line = Line(
+                    number=row["number"],
+                    name=row["name"],
+                    type=row["type"],
+                    colour=row["colour"],
+                )
+                lines.append(line)
+            db.add_all(lines)
             db.commit()

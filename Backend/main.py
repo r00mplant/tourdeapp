@@ -12,11 +12,11 @@ from fastapi.responses import JSONResponse
 from sqlalchemy.exc import OperationalError
 import uvicorn
 from database import Base, engine
-from routers import health, teams, stops
-from models import Team, Stop
+from routers import health, teams, stops, lines
+from models import Team, Stop, Line
 import csv
 from fastapi.staticfiles import StaticFiles
-from seeds.seed import seed_stops
+from seeds.seed import seed_stops, seed_lines
 
 @asynccontextmanager
 async def lifespan(app: fastapi.FastAPI):
@@ -34,6 +34,7 @@ async def lifespan(app: fastapi.FastAPI):
 
     Base.metadata.create_all(bind=engine)
     seed_stops()
+    seed_lines()
     yield
 
 app = fastapi.FastAPI(
@@ -88,6 +89,7 @@ app.add_middleware(
 app.include_router(health.router)
 app.include_router(teams.router)
 app.include_router(stops.router)
+app.include_router(lines.router)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 if __name__ == "__main__":
