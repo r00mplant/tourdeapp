@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-//import './TdA.css'
-import './Stylesheet.css'
+import './TdA.css'
+//import './Stylesheet.css'
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import Home from  "./pages/Home"
 import './pages/StopDetail'

@@ -187,7 +187,7 @@ function Stops() {
             
             <div className="selection_field">
                 <FormControl>
-                    <InputLabel> Has Shelter </InputLabel>
+                    <InputLabel> Shelter </InputLabel>
 
                     <Select 
                     value={has_shelter === undefined
@@ -206,8 +206,8 @@ function Stops() {
                     }}
                     >
                         <MenuItem value=""> -- </MenuItem> 
-                        <MenuItem value="true"> true </MenuItem>
-                        <MenuItem value="false"> false </MenuItem>
+                        <MenuItem value="true"> available </MenuItem>
+                        <MenuItem value="false"> not available </MenuItem>
                     </Select>
 
 
@@ -215,7 +215,7 @@ function Stops() {
                 </FormControl>
              
                 <FormControl>
-                    <InputLabel> Wheelchair accessible </InputLabel>
+                    <InputLabel> Wheelchair </InputLabel>
 
                     <Select 
                     value={wheelchair_accessible === undefined
@@ -234,8 +234,8 @@ function Stops() {
                     }}
                     >
                         <MenuItem value=""> -- </MenuItem> 
-                        <MenuItem value="true"> true </MenuItem>
-                        <MenuItem value="false"> false </MenuItem>
+                        <MenuItem value="true"> accessible </MenuItem>
+                        <MenuItem value="false"> not accessible </MenuItem>
                     </Select>
 
 
@@ -243,7 +243,7 @@ function Stops() {
                 </FormControl>
             
                 <FormControl>
-                    <InputLabel> Ticket machene available </InputLabel>
+                    <InputLabel> Ticket machine </InputLabel>
 
                     <Select 
                     value={ticket_machine_available === undefined
@@ -262,8 +262,8 @@ function Stops() {
                     }}
                     >
                         <MenuItem value=""> -- </MenuItem> 
-                        <MenuItem value="true"> true </MenuItem>
-                        <MenuItem value="false"> false </MenuItem>
+                        <MenuItem value="true"> available </MenuItem>
+                        <MenuItem value="false"> not available </MenuItem>
                     </Select>
 
 
@@ -325,8 +325,8 @@ function Stops() {
                                     <div>
                                         {
                                             stop.has_ticket_machene
-                                            ? <p>Ticket machene: available</p>
-                                            : <p>Ticket machene: not available</p>
+                                            ? <p>Ticket machine: available</p>
+                                            : <p>Ticket machine: not available</p>
                                         }
                                     </div>
                                     <button className="navigationButton hover:cursor-pointer" onClick={() => (

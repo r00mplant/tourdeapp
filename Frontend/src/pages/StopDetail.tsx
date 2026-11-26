@@ -14,10 +14,10 @@ function StopDetail() {
     interface Stop {
         id: number;
         name: string;
-        wheelchair_accessable: boolean
-        has_shelter: boolean
-        has_ticket_machene: boolean
-        image_url?: string
+        wheelchair_accessable: boolean;
+        has_shelter: boolean;
+        has_ticket_machine: boolean;
+        image_url?: string;
     } 
 
     useEffect(() => {
@@ -34,6 +34,7 @@ function StopDetail() {
                 }
                  
                 const stopById : Stop = await responseToStop.json()
+                console.log(stopById) 
                 setDetailledStop(stopById)
             } catch (error) {
                 if (error instanceof TypeError) {
@@ -101,9 +102,9 @@ function StopDetail() {
                         }
                     
                         {
-                            detailledStop.has_ticket_machene
-                            ? <p>A ticket machene</p>
-                            : <p>No ticket machene</p>
+                            detailledStop.has_ticket_machine
+                            ? <p>A ticket machine</p>
+                            : <p>No ticket machine</p>
                         }
 
                         {

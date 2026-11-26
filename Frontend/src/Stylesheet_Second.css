@@ -8,12 +8,12 @@
   --color-brand-subtle: var(--brand-subtle);
   --color-brand-foreground: var(--brand-foreground);
 
-  /* ACCENT */
-  --color-accent: var(--accent-default);
-  --color-accent-dark: var(--accent-dark);
-  --color-accent-light: var(--accent-light);
-  --color-accent-subtle: var(--accent-subtle);
-  --color-accent-foreground: var(--accent-foreground);
+  /* secondary */
+  --color-secondary: var(--secondary-default);
+  --color-secondary-dark: var(--secondary-dark);
+  --color-secondary-light: var(--secondary-light);
+  --color-secondary-subtle: var(--secondary-subtle);
+  --color-secondary-foreground: var(--secondary-foreground);
 
   /* NEUTRAL */
   --color-neutral-50: var(--neutral-50);
@@ -58,7 +58,7 @@
 
   /* GRADIENTS */
   --background-image-brand: var(--gradient-brand);
-  --background-image-accent: var(--gradient-accent);
+  --background-image-secondary: var(--gradient-secondary);
   --background-image-hero: var(--gradient-hero);
   --background-image-surface: var(--gradient-surface);
   --background-image-card: var(--gradient-card);
@@ -139,18 +139,18 @@
   --color-brand-900: var(--brand-900);
   --color-brand-950: var(--brand-950);
 
-  /* ACCENT SHADES */
-  --color-accent-50: var(--accent-50);
-  --color-accent-100: var(--accent-100);
-  --color-accent-200: var(--accent-200);
-  --color-accent-300: var(--accent-300);
-  --color-accent-400: var(--accent-400);
-  --color-accent-500: var(--accent-500);
-  --color-accent-600: var(--accent-600);
-  --color-accent-700: var(--accent-700);
-  --color-accent-800: var(--accent-800);
-  --color-accent-900: var(--accent-900);
-  --color-accent-950: var(--accent-950);
+  /* secondary SHADES */
+  --color-secondary-50: var(--secondary-50);
+  --color-secondary-100: var(--secondary-100);
+  --color-secondary-200: var(--secondary-200);
+  --color-secondary-300: var(--secondary-300);
+  --color-secondary-400: var(--secondary-400);
+  --color-secondary-500: var(--secondary-500);
+  --color-secondary-600: var(--secondary-600);
+  --color-secondary-700: var(--secondary-700);
+  --color-secondary-800: var(--secondary-800);
+  --color-secondary-900: var(--secondary-900);
+  --color-secondary-950: var(--secondary-950);
 
   /* SUCCESS SHADES */
   --color-success-50: var(--success-50);
@@ -228,12 +228,12 @@
   --brand-subtle: #0e6dad1a;
   --brand-foreground: #ffffff;
 
-  /* ACCENT */
-  --accent-default: #91f5ad;
-  --accent-dark: #78db95;
-  --accent-light: #c5ffdf;
-  --accent-subtle: #91f5ad1a;
-  --accent-foreground: #18181b;
+  /* secondary */
+  --secondary-default: #91f5ad;
+  --secondary-dark: #78db95;
+  --secondary-light: #c5ffdf;
+  --secondary-subtle: #91f5ad1a;
+  --secondary-foreground: #18181b;
 
   /* NEUTRAL */
   --neutral-50: #f0f1f2;
@@ -278,7 +278,7 @@
 
   /* GRADIENTS */
   --gradient-brand: linear-gradient(135deg, #005795 0%, #91f5ad 100%);
-  --gradient-accent: linear-gradient(135deg, #91f5ad 0%, #c5ffdf 100%);
+  --gradient-secondary: linear-gradient(135deg, #91f5ad 0%, #c5ffdf 100%);
   --gradient-hero: linear-gradient(135deg, #005795 0%, #0e6dad 50%, #91f5ad 100%);
   --gradient-surface: linear-gradient(to bottom, #ffffff 0%, #fcfdfe 100%);
   --gradient-card: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%);
@@ -359,18 +359,18 @@
   --brand-900: #00264c;
   --brand-950: #00163b;
 
-  /* ACCENT SHADES */
-  --accent-50: #d5ffdf;
-  --accent-100: #c8f5d2;
-  --accent-200: #a2e8b3;
-  --accent-300: #72d38e;
-  --accent-400: #51b370;
-  --accent-500: #2a9050;
-  --accent-600: #007536;
-  --accent-700: #005d1f;
-  --accent-800: #004412;
-  --accent-900: #003008;
-  --accent-950: #002000;
+  /* secondary SHADES */
+  --secondary-50: #d5ffdf;
+  --secondary-100: #c8f5d2;
+  --secondary-200: #a2e8b3;
+  --secondary-300: #72d38e;
+  --secondary-400: #51b370;
+  --secondary-500: #2a9050;
+  --secondary-600: #007536;
+  --secondary-700: #005d1f;
+  --secondary-800: #004412;
+  --secondary-900: #003008;
+  --secondary-950: #002000;
 
   /* SUCCESS SHADES */
   --success-50: #d2ffdb;
