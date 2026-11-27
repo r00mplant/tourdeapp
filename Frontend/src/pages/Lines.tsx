@@ -72,9 +72,6 @@ function Lines() {
                 {
                     lines.map((line) => (
                         <div>
-
-                        </div>
-                        <div>
                     <table>
                         <thead>
                             <tr>
