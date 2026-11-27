@@ -29,7 +29,7 @@ function Lines() {
     const [lines, setLines] = useState<Line[]>([]);
 
     async function listLines() {
-        let lineId: number = 1;
+        let lineId: number;
         
         const responseToLines = await fetch("./api/v1/lines")
         const numLines = await responseToLines.json()
@@ -37,10 +37,11 @@ function Lines() {
 
         console.log("fetch: ", responseToLines)
         console.log("response: ", numLines)
+        console.log("Anzahl erstellter Lines: ", lineId)
 
         const newLines: Line[] = [];
 
-        for(let i=0; i<numLines; i++) {
+        for(let i=0; i< lineId; i++) {
             const newLine = new Line (
                 numLines[i].id,
                 numLines[i].number,
@@ -71,6 +72,9 @@ function Lines() {
                 {
                     lines.map((line) => (
                         <div>
+
+                        </div>
+                        <div>
                     <table>
                         <thead>
                             <tr>
@@ -88,6 +92,11 @@ function Lines() {
                                 {
                                     line.name
                                 }
+                                <div>
+                                    {
+                                        line.name
+                                    }
+                                </div>
                                 <br />
                                 {
                                     line.number
